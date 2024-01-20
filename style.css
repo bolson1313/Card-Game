@@ -1,0 +1,64 @@
+img{
+    width: 100%;
+    height: auto;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container div {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#player, #dealer{
+    padding: 5px 5px 5px 5px;
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#bet{
+    padding: 5px 5px 5px 5px;
+    margin: 10px 10px 10px 10px;
+}
+
+.summary, .points{
+    text-align: center;
+    width: 50px;
+    padding: 3px 3px 3px 3px;
+    margin: 5px 5px 5px 5px;
+}
+
+.hand {
+    width: 10%;
+    height: 10%;
+}
+
+#bet{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#bet span{
+    text-align: center;
+    width: 50%;
+}
+
+#addBet, #minusBet{
+    margin: 10px 10px 10px 10px;
+    width: 30px;
+    height: 30px;
+}
+
+#buttons button{
+    width: 60px;
+    height: 20px;
+}
