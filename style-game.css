@@ -1,0 +1,208 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    color: #EFEFEF;
+    display: grid;
+    grid-template-rows: 95% 5%;
+    background-color: lightgray;
+}
+
+footer {
+    grid-row: 2;
+    max-height: 100%;
+    background-color: #110909;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#githubicon{
+    height: 25px;
+    width: 40px;
+}
+
+img{
+    border-radius: 5px;
+    max-height: 80%;
+    max-width: 60%;
+}
+
+.container{
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0;
+    
+    background-color:#352F2F;
+
+    display: grid;
+    grid-template-columns: 30%  40%  30%;
+    grid-template-rows: 40% 10% 40% 10%;
+}
+
+#player{
+    grid-area: 3 / 2 / 3 / 3;
+}
+#dealer{
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+#player, #dealer{
+    padding: 5px 5px 5px 5px;
+    margin: 10px 10px 10px 10px;
+    background-color: #282828;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 40% 20% 40%;
+    border-radius: 15px;
+    
+}
+
+.summary, .points{
+    align-self: center;
+    width: 100%;
+    height: 60%;
+    background-color: #171313;
+    grid-row: 2 / 3;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+
+
+.hand {
+    max-height:100%;
+    max-width: 100%;
+    background-color: #363636;
+    text-align: center;
+    grid-column: 2; 
+    grid-row: 1 / span 3;
+    position: relative;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bet{
+    place-self: center;
+    grid-area: 2/ 2 / 3 / 3;
+    background-color:#191212;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 20px;
+    width: 55%;
+    height: 75%;
+}
+
+#bet span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    grid-area: 2 / 4 / 3 / 5;
+}
+
+#addBet, #minusBet{
+    grid-row: 2 / 3;
+}
+
+#buttons button{
+    grid-row: 2 / 3;
+}
+#hit, #addBet{
+    grid-column: 2 / 3;
+}
+#draw, #minusBet{
+    grid-column: 6 / 7;
+}
+
+button{
+    appearance: none;
+    background-color: #272424;
+    border: 2px solid #0d0d0d;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #EFEFEF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+}
+button:disabled {
+    pointer-events: none;
+}
+  
+button:hover {
+    background-color: #443e3e;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+  
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+
+#buttons{
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+#bet, #buttons {
+    display: grid;
+    grid-template: 30% 40% 30% / 10% 20% 10% 20% 10% 20% 10%;
+}
+
+@media (max-width: 1023px) {
+    .container{
+        display: grid;
+        grid-template-columns: 5%  90%  5%;
+        grid-template-rows: 42% 10% 42% 6%;
+    }
+    img{
+        max-height: 50%;
+    }
+    #buttons, #bet{
+        display: grid;
+        grid-template: 15% 70% 15% / 5% 25% 10% 20% 10% 25% 5%;
+    }
+    #hit{
+        grid-column: span 2 / 4;
+    }
+    #draw{
+        grid-column: 5 / span 2;
+    }
+}
+
+@media (min-width: 1024px){
+    #bet, #buttons {
+        display: grid;
+        grid-template: 20% 60% 20% / 20% 15% 5% 20% 5% 15% 20%;
+    }
+}
