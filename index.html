@@ -15,43 +15,48 @@ https://fonts.google.com/specimen/Rubik/about -->
 
         <div id="dealer">
             <div class="points">
-                <span id="dealerPoints">16000$</span>
+                <span id="dealerPoints"></span>
             </div>
             <div id="dealerHand" class="hand">
-                <img src="/images/cards/pik-3.jpg" alt="pik-3">
+                
             </div>
             <div class="summary">
-                <span id="dealerSum">14</span>
+                <span id="dealerSum"></span>
             </div>
         </div>
             
         <div id="bet">
-            <button id="addBet">+</button>
-            <span>100$</span>
-            <button id="minusBet">-</button>
+            <button id="addBet" onclick="addBet()">+</button>
+            <span id="spanBet"></span>
+            <button id="minusBet" onclick="minusBet()">-</button>
         </div>
 
         
         <div id="player">
             <div class="points">
-                <span id="playerPoints">167987$</span>
+                <span id="playerPoints"></span>
             </div>
             <div id="playerHand" class="hand">
-                <img src="/images/cards/pik-as.jpg" alt="pik-3">
+                
             </div>
             <div class="summary">
-                <span id="playerSum">21</span>
+                <span id="playerSum"></span>
             </div>
         </div>
 
         <div id="buttons">
-            <button id="hit" class="gameButton">Hit!</button>
-            <button id="draw" class="gameButton">Stand!</button>
+            <button id="hit" class="gameButton" onclick="hit()">Hit!</button>
+            <span id="startSpan"><button id="start" class="gameButton" onclick="startGame()">Start</button></span>
+            <button id="draw" class="gameButton" onclick="stand()">Stand!</button>
         </div>
     </div>
     <footer>
         <a href="https://github.com/bolson1313" class="github" name="github" target="_blank"><img id="githubicon" src="/images/github-mark-white.svg" alt="github"></a>
     </footer>
-    
+
+    <script src="game.js"></script>
+    <script>
+        initializeGame();
+    </script>
 </body>
 </html>
