@@ -45,23 +45,21 @@ function getRandomCard() {
 
 function bet(){
   if(playerCoins.innerText == ''){
-    playerCoins.value = 100;
+    playerCoins.value = parseInt(localStorage.getItem('playerCoins')) || 500;
     playerCoins.innerText = playerCoins.value;
-    dealerCoins.value = 100;
+    dealerCoins.value = parseInt(localStorage.getItem('dealerCoins')) || 500;
     dealerCoins.innerText = dealerCoins.value;
+    console.log("restart game");
   }
-  
-  console.log(playerCoins.value);
 }
-
 
 function initializeGame() {
     bet();
     hitButton.disabled = true;
     drawButton.disabled = true;
+    betCoins.innerText = betCoins.value;
     console.log("initialize game");
 }
-
 
 function hit() {
   pointsCounter(dealCard(playerHand), false);
@@ -79,9 +77,9 @@ function stand(){
   drawButton.disabled = true;
   hitButton.disabled = true;
 
-  setTimeout(() => {
-    dealerAfterDraw();
-  }, 2100);
+    setTimeout(() => {
+      dealerAfterDraw();
+    }, 2100);
 }
 
 function startGame() {
@@ -98,34 +96,27 @@ function startGame() {
     pointsCounter(dealCard(dealerHand), true);
     pointsCounter(dealCard(playerHand), false);
     pointsCounter(dealCard(playerHand), false);
-    checkWin();
   } else {
     setTimeout("alert('You must bet some coins before starting')");
   }
 }
 
 function addBet(){
-  console.log("add bet");
   if(checkCoins()){
     playerCoins.value -= 50;
     playerCoins.innerText = playerCoins.value;
-    betCoins.value += 50;
+    betCoins.value = parseInt(betCoins.value) + 50;
     betCoins.innerText = betCoins.value;
-    console.log(playerCoins.value);
-    console.log(betCoins.value);
   }
   checkCoins();
 }
 
 function minusBet(){
   if(betCoins.value != 0){
-    console.log("minus bet");
     playerCoins.value += 50;
     playerCoins.innerText = playerCoins.value;
-    betCoins.value -= 50;
+    betCoins.value = parseInt(betCoins.value) - 50;
     betCoins.innerText = betCoins.value;
-    console.log(playerCoins.value);
-    console.log(betCoins.value);
     checkCoins();
   }
 }
@@ -140,28 +131,29 @@ function checkCoins(){
   }
 }
 
+
 function dealCard(hand) {
   let randomCard = getRandomCard();
-  let CardFile = {src: null};
+  let CardFile = { src: null };
   let cardImage = document.createElement('img');
 
-  if(hiddenDealerCard.cardID == null){
+  if (hiddenDealerCard.cardID == null) {
     hiddenDealerCard.cardID = randomCard;
-    console.log("hiddenCard: " + suits[randomCard.suitIndex] + "-" +ranks[randomCard.rankIndex]);
+    console.log("hiddenCard: " + suits[randomCard.suitIndex] + "-" + ranks[randomCard.rankIndex]);
     let HiddenCardFile = hiddenDealerCard.src;
     cardImage.src = HiddenCardFile;
     cardImage.alt = suits[randomCard.suitIndex] + " " + ranks[randomCard.rankIndex];
-    //cardImage.className = 'backCard';
   } else {
-    console.log("random card: "+ suits[randomCard.suitIndex] + "-" +ranks[randomCard.rankIndex]);
-    CardFile.src = "images/cards/"+suitsFile[randomCard.suitIndex] + "-" +ranksFile[randomCard.rankIndex] + ".jpg";
+    console.log("random card: " + suits[randomCard.suitIndex] + "-" + ranks[randomCard.rankIndex]);
+    CardFile.src = "images/cards/" + suitsFile[randomCard.suitIndex] + "-" + ranksFile[randomCard.rankIndex] + ".jpg";
     console.log(CardFile.src);
 
     cardImage.src = CardFile.src;
     cardImage.alt = suits[randomCard.suitIndex] + " " + ranks[randomCard.rankIndex];
     console.log(randomCard);
   }
-  hand.appendChild(cardImage);
+  
+  cardAnimation(cardImage, hand);
   return randomCard;
 }
 
@@ -186,14 +178,12 @@ function pointsCounter(card, playerType){
         playerPointsValue += ranksValues[card.rankIndex];
         playerPoints.innerText = playerPointsValue;
       }
-    
   }
 }
 
 function checkWin(){
   if(playerPointsValue == 21 && playerPointsValue == dealerPointsValue){
     flipCard();
-    //setTimeout("alert('Draw!');", 1);
     clearingAfterGameEnds();
     setTimeout(() => {
       alert('Draw!');
@@ -203,7 +193,6 @@ function checkWin(){
     return false;
   } else if(playerPointsValue > 21){
     flipCard();
-    //setTimeout("alert('You lost " + betCoins.value + " points!');", 1);
     clearingAfterGameEnds();
     setTimeout(() => {
       alert("You lost " + betCoins.value + " points!");
@@ -214,18 +203,18 @@ function checkWin(){
     return false;
   } else if(playerPointsValue == 21) {
     flipCard();
-    //setTimeout("alert('You win " + betCoins.value*2 + " points!');", 1);
     clearingAfterGameEnds();
     setTimeout(() => {
       alert("You win " + betCoins.value*2 + " points!");
       playerCoins.value += betCoins.value * 2;
       playerCoins.innerText = playerCoins.value;
+      dealerCoins.value -= betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
     }, 3000);
 
     return false;
   } else if(dealerPointsValue == 21) {
     flipCard();
-    //setTimeout("alert('You lost " + betCoins.value + " points!');", 1);
     clearingAfterGameEnds();
     setTimeout(() => {
       alert("You lost " + betCoins.value + " points!");
@@ -236,12 +225,13 @@ function checkWin(){
     return false;
   } else if(dealerPointsValue > 21) {
     flipCard();
-    //setTimeout("alert('You win " + betCoins.value*2 + " points!');", 1);
     clearingAfterGameEnds();
     setTimeout(() => {
       alert("You win " + betCoins.value*2 + " points!");
       playerCoins.value += betCoins.value * 2;
       playerCoins.innerText = playerCoins.value;
+      dealerCoins.value -= betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
     }, 3000);
 
     return false;
@@ -256,13 +246,24 @@ function removeAllChildNodes(parent) {
 }
 
 function clearingAfterGameEnds(){
-  
+
+    setTimeout(() => {
+      dealerPointsValue = 0;
+      playerPointsValue = 0;
+      playerPoints.innerText = '';
+      dealerPoints.innerText = '';
+
+      console.log(playerCoins.value + " | " + dealerCoins.value);
+      localStorage.setItem('playerCoins', parseInt(playerCoins.value));
+      localStorage.setItem('dealerCoins', parseInt(dealerCoins.value));
+      console.log("saved: dealer: "+localStorage.getItem('dealerCoins')+ " player: "+localStorage.getItem('playerCoins'));
+    }, 3020);
+    
     hiddenDealerCard.cardID = null;
     hitButton.disabled = true;
     drawButton.disabled = true;
     hitButton.disabled = true;
     drawButton.disabled = true;
-    
 
     setTimeout(() => {
       removeAllChildNodes(playerHand);
@@ -270,46 +271,70 @@ function clearingAfterGameEnds(){
       addButton.disabled = false;
       minusButton.disabled = false;
       startButton.disabled = false;
-      dealerPoints.innerText = '';
-      playerPoints.innerText = '';
-      dealerPointsValue = 0;
-      playerPointsValue = 0;
       betCoins.value = 0;
       betCoins.innerText = betCoins.value;
       flipped = true;
     }, 3500);
-    
+    outOfCoins();
+}
+
+function outOfCoins(){
+  if(playerCoins.value <= 0){
+    setTimeout(() => {
+      alert("Game Over! You lost!");
+      localStorage.clear();
+      console.log("restart! dealer: "+localStorage.getItem('dealerCoins')+" player: "+localStorage.getItem('playerCoins'));
+      window.location.reload();
+    }, 3200);
+  } else if(dealerCoins.value <= 0){
+    setTimeout(() => {
+      alert("Game Over! You You Won!");
+      localStorage.clear();
+      console.log("restart: "+localStorage.getItem('dealerCoins')+" player: "+localStorage.getItem('playerCoins'));
+      window.location.reload();
+    }, 3200);
+  }
 }
 
 async function dealerAfterDraw(){
-  do{
-    await sleep(600);
+  while(checkWin()){ 
+    await sleep(1000);
+    if(dealerPointsValue > playerPointsValue && dealerPointsValue <= 21){
+        clearingAfterGameEnds();
+        setTimeout(() => {
+          alert("You lost " + betCoins.value + " points!");
+          dealerCoins.value += betCoins.value;
+          dealerCoins.innerText = dealerCoins.value;
+        }, 3000);
+        break;
+    }
     pointsCounter(dealCard(dealerHand), true);
-    await sleep(200);
-  }while(checkWin())
+    await sleep(300);
+  }
 }
 
 function flipCard(){
+  
   if(flipped){
-  dealerHand.removeChild(dealerHand.firstChild);
   let backCard = document.createElement('img');
-  let actualCard = dealerHand.firstChild;
+  let actualCard = dealerHand.getElementsByTagName('img')[0];
   let BackCardSrc = "images/cards/" + suitsFile[hiddenDealerCard.cardID.suitIndex] + "-" + ranksFile[hiddenDealerCard.cardID.rankIndex] + ".jpg";
-
+  
   dealerPointsValue += ranksValues[hiddenDealerCard.cardID.rankIndex];
+  dealerPoints.innerText = dealerPointsValue;
 
   actualCard.style.transition = "transform 1s ease";
-  actualCard.style.transform = "rotateY(90deg)";
+  actualCard.style.transform = "rotateY(90deg) translateX(-20%)";
   setTimeout(() => {
     backCard.src = BackCardSrc;
-    dealerHand.replaceChild(backCard, dealerHand.firstChild);
+    dealerHand.replaceChild(backCard, actualCard);
+    
     backCard.style.transition = "transform 1.1s ease";
-    backCard.style.transform = "rotateY(90deg)";
+    backCard.style.transform = "rotateY(90deg)  translateX(-20%)";
     setTimeout(() => {
-      backCard.style.transform = "rotateY(0deg)";
+      backCard.style.transform = "rotateY(0deg)  translateX(-20%)";
     }, 20);
   }, 2000);
-  console.log(backCard);
   console.log("card flipped");
   flipped = false;
   }
@@ -317,4 +342,32 @@ function flipCard(){
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function stackCards(hand) {
+  let cards = hand.getElementsByTagName('img');
+  cards[0].style.transition = "transform 0.4s ease";
+  cards[0].style.transform = "translateX(-20%)";
+  for (let i = 1; i < cards.length; i++) {
+      cards[i].style.transition = "transform 0.4s ease";
+      cards[i].style.transform = 'translateX('+(i-1)*20+'%)';
+  }
+}
+
+function cardAnimation(cardImage, hand) {
+  hand.appendChild(cardImage);
+  let startPos = window.innerWidth;
+  cardImage.style.transform = 'translateX('+startPos+'px)';
+  cardImage.style.transition = 'transform 1s ease'; 
+
+
+  let cards = hand.getElementsByTagName('img');
+
+  setTimeout(() => {
+    cardImage.style.transform = 'translateX(0)';
+  }, 100);
+
+  setTimeout(() => {
+    stackCards(hand);
+  }, 1100);
 }
