@@ -3,6 +3,7 @@ html, body{
     padding: 0;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -28,7 +29,7 @@ footer {
 }
 
 img{
-    border-radius: 5px;
+    border-radius: 8px;
     max-height: 80%;
     max-width: 60%;
 }
@@ -76,10 +77,8 @@ img{
     border-radius: 15px;
 }
 
-
-
 .hand {
-    max-height:100%;
+    max-height: 100%;
     max-width: 100%;
     background-color: #363636;
     text-align: center;
@@ -93,7 +92,15 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow:visible;
+    /*overflow: hidden;*/
 }
+
+.hand img {
+    position: absolute;
+    transform-origin: bottom;
+}
+
 
 #bet{
     place-self: center;
