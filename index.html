@@ -1,58 +1,31 @@
 <!DOCTYPE html>
-<!-- card photos -->
-<!-- https://www.flickr.com/photos/167981955@N07/albums/72157719174954365/with/51165340414/ -->
-<!-- font
-https://fonts.google.com/specimen/Rubik/about -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Blackjack</title>
-    <link rel="stylesheet" href="style-game.css">
+    <link rel="stylesheet" href="style-mainPage.css">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="icon" type="image/png" href="images/icons8-casino-50.png">
+    <link rel="stylesheet" href="style-mainPage.css">
+    <script defer src="scrollHideen.js"></script>
 </head>
 <body>
-    <div class="container">
+    <section id="menu" class="hidden">
+        <ul>
+            <li><a href="gamePage.html" data-text="Play!">Play!</a></li>
+            <li><a target="_blank" href="https://bicyclecards.com/how-to-play/blackjack/" data-text="About">About The Game</a></li>
+            <li><a href="#carousel" data-text="Gallery">Card Gallery</a></li>
+            <li><a target="_blank" href="https://github.com/bolson1313" data-text="Github">Github</a></li>
+            <li><a href="#form" data-text="Contact">Contact</a></li>
+        </ul>
+    </section>
+    <section id="carousel" class="hidden">
+        karuzela tak o
+    </section>
+    <section id="form" class="hidden">
+        formularz bedzie tu
+    </section>
 
-        <div id="dealer">
-            <div class="points">
-                <span id="dealerPoints"></span>
-            </div>
-            <div id="dealerHand" class="hand"></div>
-            <div class="summary">
-                <span id="dealerSum"></span>
-            </div>
-        </div>
-            
-        <div id="bet">
-            <button id="addBet" onclick="addBet()">+</button>
-            <span id="spanBet"></span>
-            <button id="minusBet" onclick="minusBet()">-</button>
-        </div>
-
-        
-        <div id="player">
-            <div class="points">
-                <span id="playerPoints"></span>
-            </div>
-            <div id="playerHand" class="hand"></div>
-            <div class="summary">
-                <span id="playerSum"></span>
-            </div>
-        </div>
-
-        <div id="buttons">
-            <button id="hit" class="gameButton" onclick="hit()">Hit!</button>
-            <span id="startSpan"><button id="start" class="gameButton" onclick="startGame()">Start</button></span>
-            <button id="draw" class="gameButton" onclick="stand()">Stand!</button>
-        </div>
-    </div>
-    <footer>
-        <a href="https://github.com/bolson1313" class="github" name="github" target="_blank"><img id="githubicon" src="/images/github-mark-white.svg" alt="github"></a>
-    </footer>
-
-    <script src="game.js"></script>
-    <script>
-        initializeGame();
-    </script>
+    
 </body>
 </html>
