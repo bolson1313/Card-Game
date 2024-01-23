@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    min-height: 100vh;
+    background-color: #3f3a3a;
+    overflow-x: hidden;
+}
+
+ul{
+    position: relative;
+}
+ul li {
+    list-style: none;
+    text-align: center;
+}
+ul li a{
+    font-size: 50px;
+    color: #7c7c7c;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-flex;
+    font-weight: 600;
+    transition: 0.5s;
+    letter-spacing: 3px;
+}
+ul:hover li a{
+    color: #4b4b4b;
+}
+ul li:hover a{
+    color: #d3d3d3;
+    background-color: transparent;
+}
+ul li a:before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left:40%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    color: #0000001a;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 500px;
+    transition: letter-spacing 0.5s, left 0.5s;
+    text-wrap: nowrap;
+}
+ul li a:hover:before{
+    content: attr(data-text);
+    opacity: 1;
+    left: 50%;
+    letter-spacing: 10px;
+    width: 1800px;
+    height: 1800px;
+}
+ul li:nth-child(4n + 1) a:before {
+    background: #757575;
+}
+ul li:nth-child(4n + 2) a:before {
+    background: #656565;
+}
+ul li:nth-child(4n + 3) a:before {
+    background: #555555;
+}
+ul li:nth-child(4n + 4) a:before {
+    background: #454545;
+}
+
+
+
+section {
+    display:grid;
+    place-items: center;
+    align-content: center;
+    min-width: 100vw;
+    min-height: 101vh;
+}
+
+.hidden {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateX(-99%);
+    transition: 1s linear;
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+@media (max-width: 1023px) {
+   ul li a{
+        font-size: 20px;
+   }
+   ul li a:before{
+        font-size: 2em;
+   }
+}
+
+@media(prefers-reduced-motion){
+    .hidden {
+        transition: none;
+    }
+}
