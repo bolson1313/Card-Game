@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- card photos -->
+<!-- https://www.flickr.com/photos/167981955@N07/albums/72157719174954365/with/51165340414/ -->
+<!-- font
+https://fonts.google.com/specimen/Rubik/about -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="style-game.css">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/icons8-casino-50.png">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" id="mainPageLink"><button id="mainPageBtn"><span id="buttonSpan">Go Back</span></button></a>
+        <div id="dealer">
+            <div class="points">
+                <span id="dealerPoints"></span>
+            </div>
+            <div id="dealerHand" class="hand"></div>
+            <div class="summary">
+                <span id="dealerSum"></span>
+            </div>
+        </div>
+            
+        <div id="bet">
+            <button id="addBet" onclick="addBet()">+</button>
+            <span id="spanBet"></span>
+            <button id="minusBet" onclick="minusBet()">-</button>
+        </div>
+
+        
+        <div id="player">
+            <div class="points">
+                <span id="playerPoints"></span>
+            </div>
+            <div id="playerHand" class="hand"></div>
+            <div class="summary">
+                <span id="playerSum"></span>
+            </div>
+        </div>
+
+        <div id="buttons">
+            <button id="hit" class="gameButton" onclick="hit()">Hit!</button>
+            <span id="startSpan"><button id="start" class="gameButton" onclick="startGame()">Start</button></span>
+            <button id="draw" class="gameButton" onclick="stand()">Stand!</button>
+        </div>
+    </div>
+    <footer>
+        <a href="https://github.com/bolson1313" class="github" name="github" target="_blank"><img id="githubicon" src="/images/github-mark-white.svg" alt="github"></a>
+    </footer>
+
+    <script src="game.js"></script>
+    <script>
+        initializeGame();
+    </script>
+</body>
+</html>
