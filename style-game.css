@@ -29,9 +29,15 @@ footer {
 }
 
 img{
+    transition: 1s linear;
     border-radius: 8px;
     max-height: 80%;
     max-width: 60%;
+}
+img:hover {
+    transition: 1s linear;
+    scale: 1.1;
+    z-index: 1;
 }
 
 #mainPageBtn, #mainPageLink{
@@ -43,7 +49,6 @@ img{
     max-height: 100%;
     max-width: 100%;
     margin: 0;
-    
     background-color:#352F2F;
 
     display: grid;
