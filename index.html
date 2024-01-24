@@ -8,8 +8,11 @@
     <link rel="icon" type="image/png" href="images/icons8-casino-50.png">
     <link rel="stylesheet" href="style-mainPage.css">
     <script defer src="scrollHideen.js"></script>
+    <script defer src="formValidation.js"></script>
 </head>
 <body>
+    <a id="scrollUpBtn" href="#"><img id="scrollUpImg" src="/images/scroll-up-icon.png"></a>
+
     <section id="menu" class="hidden">
         <ul>
             <li><a href="gamePage.html" data-text="Play!">Play!</a></li>
@@ -20,10 +23,37 @@
         </ul>
     </section>
     <section id="carousel" class="hidden">
-        karuzela tak o
+        <div id="carouselDiv">
+            <button id="previous"><img src="/images/back.png"></button>
+            <div id="carouselImg"><script defer src="carousel.js"></script></div>
+            <button id="next"><img src="/images/next.png"></button>
+        </div>
     </section>
     <section id="form" class="hidden">
-        formularz bedzie tu
+        <form>
+            <label for="name" class="formlabels">Name</label>
+            <input type="text" id="nameInput" name="name" required>
+
+            <label for="inputNumber" class="formlabels">Numer Telefonu</label>
+            <input type="text" id="inputNumber" name="inputNumber" required>
+
+            <label for="email" class="formlabels">Email</label>
+            <input type="email" id="emailInput" name="email" required>
+
+            <label for="content" class="formlabels">Content of the message</label>
+            <input type="text" id="contentInput" name="content" required>
+
+            <label for="radio" class="formlabels">Is your message important?</label>
+            <div id="radio" name="radio">
+                <label for="radiusInputImp">Yes</label><input type="radio" id="radiusInputImp" name="radiusInput">
+                <label for="radiusInputNotImp">No</label><input type="radio" id="radiusInputNotImp" name="radiusInput" checked>
+            </div>
+            <div id="buttonsForm">
+                <input type="button" class="buttonForm" value="Submit" onclick="Validate()">
+                <input type="reset" value="Reset Form" class="buttonForm">
+            </div>  
+            
+        </form>
     </section>
 
     
