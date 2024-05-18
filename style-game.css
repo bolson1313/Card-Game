@@ -1,4 +1,14 @@
-html, body{
+/*
+Globalne Style
+---------------------------------------------------------------------------
+Opis: Globalne style dla elementów HTML i body.
+
+1. Resetowanie marginesu i paddingu.
+2. Ustawienie pełnej wysokości i szerokości.
+3. Ukrywanie overflow dla całego dokumentu.
+---------------------------------------------------------------------------
+*/
+html, body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -6,6 +16,16 @@ html, body{
     overflow: hidden;
 }
 
+/*
+Style dla Elementu Body
+---------------------------------------------------------------------------
+Opis: Style dla elementu body.
+
+1. Ustawienie rodziny czcionek i koloru tekstu.
+2. Użycie układu siatki z dwoma rzędami.
+3. Ustawienie koloru tła.
+---------------------------------------------------------------------------
+*/
 body {
     font-family: 'Cairo', sans-serif;
     color: #EFEFEF;
@@ -14,6 +34,15 @@ body {
     background-color: lightgray;
 }
 
+/*
+Style dla Elementu Stopki (Footer)
+---------------------------------------------------------------------------
+Opis: Style dla elementu stopki.
+
+1. Użycie układu siatki do pozycjonowania stopki.
+2. Ustawienie koloru tła, wyrównania tekstu i właściwości flex.
+---------------------------------------------------------------------------
+*/
 footer {
     grid-row: 2;
     max-height: 100%;
@@ -24,11 +53,29 @@ footer {
     align-items: center;
 }
 
-#githubicon{
+/*
+Style dla Ikony GitHub
+---------------------------------------------------------------------------
+Opis: Style dla ikony GitHub.
+
+1. Ustawienie szerokości ikony GitHub.
+---------------------------------------------------------------------------
+*/
+#githubicon {
     width: 20%;
 }
 
-img{
+/*
+Style dla Obrazów
+---------------------------------------------------------------------------
+Opis: Style dla obrazów.
+
+1. Dodanie efektu przejścia i zaokrąglenie narożników.
+2. Ustawienie maksymalnej wysokości i szerokości dla obrazów.
+3. Dodanie efektu hover dla skalowania i zmiany z-indexu.
+---------------------------------------------------------------------------
+*/
+img {
     transition: 1s linear;
     border-radius: 8px;
     max-height: 80%;
@@ -40,30 +87,49 @@ img:hover {
     z-index: 1;
 }
 
-#mainPageBtn, #mainPageLink{
+/*
+Style dla Przycisku Strony Głównej i Linku
+---------------------------------------------------------------------------
+Opis: Style dla przycisku strony głównej i linku.
+
+1. Ustawienie szerokości i obszaru siatki.
+---------------------------------------------------------------------------
+*/
+#mainPageBtn, #mainPageLink {
     width: 10%;
     grid-area: 2/2/3/3;
 }
 
-.container{
+/*
+Style dla Kontenera
+---------------------------------------------------------------------------
+Opis: Style dla kontenera.
+
+1. Ustawienie maksymalnej wysokości, szerokości i koloru tła.
+2. Użycie układu siatki z określonymi kolumnami i rzędami.
+---------------------------------------------------------------------------
+*/
+.container {
     max-height: 100%;
     max-width: 100%;
     margin: 0;
-    background-color:#352F2F;
+    background-color: #352F2F;
 
     display: grid;
-    grid-template-columns: 30%  40%  30%;
+    grid-template-columns: 30% 40% 30%;
     grid-template-rows: 40% 10% 40% 10%;
 }
 
-#player{
-    grid-area: 3 / 2 / 3 / 3;
-}
-#dealer{
-    grid-area: 1 / 2 / 2 / 3;
-}
+/*
+Style dla Gracza i Krupiera
+---------------------------------------------------------------------------
+Opis: Style dla elementów gracza i krupiera.
 
-#player, #dealer{
+1. Ustawienie paddingu, marginesu, koloru tła i border-radius.
+2. Użycie układu siatki z określonymi kolumnami i rzędami.
+---------------------------------------------------------------------------
+*/
+#player, #dealer {
     padding: 5px 5px 5px 5px;
     margin: 10px 10px 10px 10px;
     background-color: #282828;
@@ -71,10 +137,17 @@ img:hover {
     grid-template-columns: 20% 60% 20%;
     grid-template-rows: 40% 20% 40%;
     border-radius: 15px;
-    
 }
+/*
+Style dla Podsumowania i Punktów
+---------------------------------------------------------------------------
+Opis: Style dla elementów podsumowania i punktów.
 
-.summary, .points{
+1. Wyrównanie zawartości i ustawienie koloru tła.
+2. Użycie właściwości flex do wyśrodkowania.
+---------------------------------------------------------------------------
+*/
+.summary, .points {
     align-self: center;
     width: 100%;
     height: 60%;
@@ -87,6 +160,15 @@ img:hover {
     border-radius: 15px;
 }
 
+/*
+Style dla Ręki (Hand)
+---------------------------------------------------------------------------
+Opis: Style dla elementu reki.
+
+1. Ustawienie maksymalnej wysokości, szerokości, koloru tła i pozycji.
+2. Użycie właściwości flex do wyśrodkowania i obszaru przepełnienia.
+---------------------------------------------------------------------------
+*/
 .hand {
     max-height: 100%;
     max-width: 100%;
@@ -106,16 +188,32 @@ img:hover {
     /*overflow: hidden;*/
 }
 
+/*
+Style dla Obrazów w Ręce
+---------------------------------------------------------------------------
+Opis: Style dla obrazów wewnątrz elementu reki.
+
+1. Absolutne pozycjonowanie i ustawienie punktu transformacji na dół.
+---------------------------------------------------------------------------
+*/
 .hand img {
     position: absolute;
     transform-origin: bottom;
 }
 
+/*
+Style dla Stawki
+---------------------------------------------------------------------------
+Opis: Style dla elementu stawki.
 
-#bet{
+1. Centrowanie za pomocą place-self i obszaru siatki.
+2. Ustawienie koloru tła, paddingu, marginesu, border-radius oraz wymiarów.
+---------------------------------------------------------------------------
+*/
+#bet {
     place-self: center;
     grid-area: 2/ 2 / 3 / 3;
-    background-color:#191212;
+    background-color: #191212;
     padding: 5px;
     margin: 10px;
     border-radius: 20px;
@@ -123,7 +221,15 @@ img:hover {
     height: 75%;
 }
 
-#bet span{
+/*
+Style dla Tekstu w Stawce
+---------------------------------------------------------------------------
+Opis: Style dla tekstu wewnątrz elementu stawki.
+
+1. Właściwości flex do wyśrodkowania.
+---------------------------------------------------------------------------
+*/
+#bet span {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,20 +238,36 @@ img:hover {
     grid-area: 2 / 4 / 3 / 5;
 }
 
-#addBet, #minusBet{
+/*
+Style dla Przycisków Dodawania i Odejmowania Stawki
+---------------------------------------------------------------------------
+Opis: Style dla przycisków dodawania i odejmowania stawki.
+
+1. Ustawienie pozycji w obszarze siatki.
+---------------------------------------------------------------------------
+*/
+#addBet, #minusBet {
     grid-row: 2 / 3;
 }
 
-#buttons button{
+/*
+Style dla Kontenera Przycisków
+---------------------------------------------------------------------------
+Opis: Style dla kontenera przycisków.
+
+1. Ustawienie pozycji w obszarze siatki.
+---------------------------------------------------------------------------
+*/
+#buttons button {
     grid-row: 2 / 3;
 }
-#hit, #addBet{
+#hit, #addBet {
     grid-column: 2 / 3;
 }
-#draw, #minusBet{
+#draw, #minusBet {
     grid-column: 6 / 7;
 }
-#startSpan{
+#startSpan {
     text-align: center;
     grid-row: 2;
     grid-column: 4;
@@ -154,7 +276,18 @@ img:hover {
     width: 80%;
 }
 
-button{
+/*
+Przyciski - Style Ogólne
+---------------------------------------------------------------------------
+Opis: Wspólne style dla przycisków.
+
+1. Definiowanie wyglądu przycisku, tła, obramowania, border-radius itp.
+2. Dodawanie przejść dla efektu płynności.
+3. Wyłączanie zdarzeń dla wyłączonego stanu.
+4. Stany hover i aktywny przycisku.
+---------------------------------------------------------------------------
+*/
+button {
     appearance: none;
     background-color: #272424;
     border: 2px solid #0d0d0d;
@@ -182,69 +315,81 @@ button{
 button:disabled {
     pointer-events: none;
 }
-  
+
 button:hover {
     background-color: #443e3e;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
-  
+
 button:active {
     box-shadow: none;
     transform: translateY(0);
 }
 
+/*
+Style dla Kontenera Przycisków
+---------------------------------------------------------------------------
+Opis: Style dla kontenera przycisków.
 
-#buttons{
+1. Ustawienie obszaru siatki i użycie układu siatki.
+---------------------------------------------------------------------------
+*/
+#buttons {
     grid-area: 4 / 2 / 5 / 3;
 }
 
-#bet, #buttons {
-    display: grid;
-    grid-template: 30% 40% 30% / 10% 20% 10% 20% 10% 20% 10%;
-}
+/*
+Responsywne Style
+---------------------------------------------------------------------------
+Opis: Media queries dla responsywnego projektowania.
 
+1. Dostosowanie układu siatki dla mniejszych ekranów.
+2. Modyfikacja rozmiaru obrazu i wielkości czcionki dla lepszej czytelności.
+3. Zmiana szerokości przycisku strony głównej.
+---------------------------------------------------------------------------
+*/
 @media (max-width: 1023px) {
-    .container{
+    .container {
         display: grid;
         grid-template-columns: 5%  90%  5%;
         grid-template-rows: 42% 10% 42% 6%;
     }
-    img{
+    img {
         max-height: 50%;
     }
-    #buttons, #bet{
+    #buttons, #bet {
         display: grid;
         grid-template: 15% 70% 15% / 5% 25% 10% 20% 10% 25% 5%;
     }
-    #hit{
+    #hit {
         grid-column: span 2 / 4;
     }
-    #draw{
+    #draw {
         grid-column: 5 / span 2;
     }
-    body{
+    body {
         font-size: 13px;
     }
     button {
         font-size: 13px;
     }
-    #mainPageBtn, #mainPage{
+    #mainPageBtn, #mainPage {
         width: 150%;
         grid-area: 2/2/3/3;
     }
-    #buttonSpan{
-        font-size: 10px;
+    #buttonSpan {
+        font-size: 16px;
     }
-    
 }
 
-@media (min-width: 1024px){
+@media (min-width: 1024px) {
     #bet, #buttons {
         display: grid;
         grid-template: 20% 60% 20% / 20% 15% 5% 20% 5% 15% 20%;
     }
-    #mainPageBtn{
+    #mainPageBtn {
+        font-size: 20px;
         width: 120%;
     }
 }

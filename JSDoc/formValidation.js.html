@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: formValidation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: formValidation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Funkcja walidująca formularz.
+ * Sprawdza poprawność wprowadzonych danych i wyświetla odpowiednie komunikaty błędów.
+ * @function
+ */
+function Validate(){
+    /**
+     * Obiekt przechowujący informacje z formularza.
+     * @type {Object}
+     * @property {string | null} name - Imię.
+     * @property {string | null} phone - Numer telefonu.
+     * @property {string | null} email - Adres e-mail.
+     * @property {string | null} content - Treść wiadomości.
+     * @property {boolean | null} type - Typ wiadomości.
+     */
+    let message = {name: null, phone: null, email: null, content: null, type: null};
+
+    /**
+     * Pole wprowadzania imienia.
+     * @type {HTMLInputElement}
+     */
+    let nameInput = document.getElementById('nameInput');
+
+    /**
+     * Pole wprowadzania numeru telefonu.
+     * @type {HTMLInputElement}
+     */
+    let phoneNumber = document.getElementById('inputNumber');
+
+    /**
+     * Pole wprowadzania adresu e-mail.
+     * @type {HTMLInputElement}
+     */
+    let email = document.getElementById('emailInput');
+
+    /**
+     * Pole wprowadzania treści wiadomości.
+     * @type {HTMLInputElement}
+     */
+    let content = document.getElementById('contentInput');
+
+    /**
+     * Przełącznik określający typ wiadomości.
+     * @type {HTMLInputElement}
+     */
+    let radiusImp = document.getElementById('radiusInputImp');
+
+    /**
+     * Flaga wskazująca poprawność danych wprowadzonych do formularza.
+     * @type {boolean}
+     */
+    let validate = true;
+    //name input validation 
+    if(nameInput.value != null){
+        if(!(/\d/.test(nameInput.value))){
+            console.log("name correct");
+            message.name = nameInput.value;
+        } else {
+            alert("You enter numbers into name text field");
+            while(/\d/.test(nameInput.value)){
+                //replace number with empty space
+                validate = false;
+                nameInput.value = nameInput.value.replace(/\d/, '');
+            }
+        }
+    } else {
+        validate = false;
+        alert("Name is required"+nameInput.value);
+    }
+
+    //phone number validation
+    if(phoneNumber.value != null){
+        if(/\d/.test(phoneNumber.value) &amp;&amp; phoneNumber.value.length == 9){
+            console.log("phone correct");
+            message.phone = phoneNumber.value;
+        } else {
+            validate = false;
+            alert("You enter letters into name phone number field or its too long");
+            phoneNumber.value = '';
+        }
+    } else {
+        validate = false;
+        alert("Phone Number is required");
+    }
+
+    //email validaiton
+    if(email.value != null){
+        if(email.value.includes('@')){
+            console.log("email correct");
+            message.email = email.value;
+        } else {
+            validate = false;
+            alert("Its not even email address");
+        }
+    } else {
+        validate = false;
+        alert("Email is required");
+    }
+
+    //content of message validation
+    if(content.value != null &amp;&amp; content.value.length >= 30){
+        console.log("content correct");
+        message.content = content.value;
+    } else {
+        validate = false;
+        alert("You have to provide content");
+    }
+
+    if(radiusImp.checked){
+        message.type = true;
+    } else {
+        message.type = false;
+    }
+
+    if(validate){
+        if(confirm("Confirm your message: "+message.content)){
+            document.getElementById('formBody').reset();
+            const messageJSON = JSON.stringify(message);
+            console.log(messageJSON);
+        }
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Validate">Validate</a></li><li><a href="global.html#addBet">addBet</a></li><li><a href="global.html#addButton">addButton</a></li><li><a href="global.html#bet">bet</a></li><li><a href="global.html#betCoins">betCoins</a></li><li><a href="global.html#cardAnimation">cardAnimation</a></li><li><a href="global.html#checkCoins">checkCoins</a></li><li><a href="global.html#checkWin">checkWin</a></li><li><a href="global.html#clearingAfterGameEnds">clearingAfterGameEnds</a></li><li><a href="global.html#dealCard">dealCard</a></li><li><a href="global.html#dealerAfterDraw">dealerAfterDraw</a></li><li><a href="global.html#dealerCoins">dealerCoins</a></li><li><a href="global.html#dealerHand">dealerHand</a></li><li><a href="global.html#dealerPoints">dealerPoints</a></li><li><a href="global.html#dealerPointsValue">dealerPointsValue</a></li><li><a href="global.html#drawButton">drawButton</a></li><li><a href="global.html#flipCard">flipCard</a></li><li><a href="global.html#flipped">flipped</a></li><li><a href="global.html#getRandomCard">getRandomCard</a></li><li><a href="global.html#hiddenDealerCard">hiddenDealerCard</a></li><li><a href="global.html#hiddenSection">hiddenSection</a></li><li><a href="global.html#hit">hit</a></li><li><a href="global.html#hitButton">hitButton</a></li><li><a href="global.html#initializeGame">initializeGame</a></li><li><a href="global.html#isVisible">isVisible</a></li><li><a href="global.html#minusBet">minusBet</a></li><li><a href="global.html#minusButton">minusButton</a></li><li><a href="global.html#outOfCoins">outOfCoins</a></li><li><a href="global.html#playerCoins">playerCoins</a></li><li><a href="global.html#playerHand">playerHand</a></li><li><a href="global.html#playerPoints">playerPoints</a></li><li><a href="global.html#playerPointsValue">playerPointsValue</a></li><li><a href="global.html#pointsCounter">pointsCounter</a></li><li><a href="global.html#ranks">ranks</a></li><li><a href="global.html#ranksFile">ranksFile</a></li><li><a href="global.html#ranksValues">ranksValues</a></li><li><a href="global.html#removeAllChildNodes">removeAllChildNodes</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#stackCards">stackCards</a></li><li><a href="global.html#stand">stand</a></li><li><a href="global.html#startButton">startButton</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#suits">suits</a></li><li><a href="global.html#suitsFile">suitsFile</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 27 2024 14:24:44 GMT+0100 (czas środkowoeuropejski standardowy)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

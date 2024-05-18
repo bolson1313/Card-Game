@@ -6,7 +6,6 @@ function Validate(){
     let email = document.getElementById('emailInput');
     let content = document.getElementById('contentInput');
     let radiusImp = document.getElementById('radiusInputImp');
-    let radiusNotImp = document.getElementById('radiusInputNotImp');
 
     let validate = true;
     //name input validation 
@@ -72,7 +71,10 @@ function Validate(){
     }
 
     if(validate){
-        alert("Message sent!");
-        return message;
+        if(confirm("Confirm your message: "+message.content)){
+            document.getElementById('formBody').reset();
+            const messageJSON = JSON.stringify(message);
+            console.log(messageJSON);
+        }
     }
 }

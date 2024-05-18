@@ -1,9 +1,29 @@
+/*
+Globalne Style
+---------------------------------------------------------------------------
+Opis: Zastosowanie stylów dla wszystkich elementów na stronie.
+
+1. Resetowanie marginesu i paddingu, ustawienie box-sizing na border-box.
+2. Wybór czcionki 'Cairo' dla wszystkich elementów.
+---------------------------------------------------------------------------
+*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Cairo', sans-serif;
 }
+
+/*
+Style dla Elementu Body
+---------------------------------------------------------------------------
+Opis: Stylizacja dla elementu body.
+
+1. Ustawienie wyśrodkowanego układu flexbox w kolumnie.
+2. Ustawienie minimalnej wysokości na 100% widoku i koloru tła.
+3. Ukrywanie poziomego przewijania.
+---------------------------------------------------------------------------
+*/
 body {
     display: flex;
     justify-content: center;
@@ -13,18 +33,37 @@ body {
     background-color: #3f3a3a;
     overflow-x: hidden;
 }
+
+/*
+Style dla Elementu HTML
+---------------------------------------------------------------------------
+Opis: Ustawienia dla elementu HTML.
+
+1. Wygładzanie animacji przewijania.
+---------------------------------------------------------------------------
+*/
 html {
     scroll-behavior: smooth;
 }
 
-ul{
+/*
+Style dla Listy i Jej Elementów
+---------------------------------------------------------------------------
+Opis: Stylizacja listy i jej elementów.
+
+1. Ustawienie pozycji listy na relative.
+2. Usunięcie domyślnych stylów dla elementów listy.
+3. Stylizacja hiperłączy wewnątrz elementów listy.
+---------------------------------------------------------------------------
+*/
+ul {
     position: relative;
 }
 ul li {
     list-style: none;
     text-align: center;
 }
-ul li a{
+ul li a {
     transition: 0.5s;
     font-size: 50px;
     color: #7c7c7c;
@@ -35,18 +74,28 @@ ul li a{
     transition: 0.5s;
     letter-spacing: 3px;
 }
-ul:hover li a{
+ul:hover li a {
     color: #4b4b4b;
 }
-ul li:hover a{
+ul li:hover a {
     color: #d3d3d3;
     background-color: transparent;
 }
-ul li a:before{
+
+/*
+Stylizacja Hiperłączy Przed Nawigacją
+---------------------------------------------------------------------------
+Opis: Dodanie efektu animacji do hiperłączy przed nawigacją.
+
+1. Ustawienie pozycji absolutnej, rozmiaru, koloru tła, itp.
+2. Animacja po najechaniu myszką.
+---------------------------------------------------------------------------
+*/
+ul li a:before {
     content: "";
     position: absolute;
     top: 50%;
-    left:40%;
+    left: 40%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
@@ -62,7 +111,7 @@ ul li a:before{
     transition: letter-spacing 0.5s, left 0.5s;
     text-wrap: nowrap;
 }
-ul li a:hover:before{
+ul li a:hover:before {
     content: attr(data-text);
     opacity: 1;
     left: 50%;
@@ -70,6 +119,15 @@ ul li a:hover:before{
     width: 1800px;
     height: 1800px;
 }
+
+/*
+Kolory dla Hiperłączy w Zależności od Pozycji
+---------------------------------------------------------------------------
+Opis: Zmiana koloru tła przed nawigacją w zależności od pozycji.
+
+1. Wybór koloru tła na podstawie pozycji elementu w liście.
+---------------------------------------------------------------------------
+*/
 ul li:nth-child(4n + 1) a:before {
     background: #757575;
 }
@@ -83,27 +141,53 @@ ul li:nth-child(4n + 4) a:before {
     background: #454545;
 }
 
+/*
+Style dla Sekcji
+---------------------------------------------------------------------------
+Opis: Stylizacja dla sekcji.
+
+1. Wykorzystanie układu siatki do wyśrodkowania zawartości.
+2. Ustawienie minimalnej szerokości i wysokości na pełny widok.
+---------------------------------------------------------------------------
+*/
 section {
-    display:grid;
+    display: grid;
     place-items: center;
     align-content: center;
     min-width: 100vw;
     min-height: 101vh;
 }
 
+/*
+Klasy do Ukrywania/Showing
+---------------------------------------------------------------------------
+Opis: Klasy dla ukrywania/odkrywania elementów z animacją.
+
+1. Ukrywanie poprzez obniżenie przezroczystości, rozmycie i przesunięcie.
+2. Odkrywanie poprzez przywrócenie przezroczystości, usunięcie rozmycia i przywrócenie pozycji.
+---------------------------------------------------------------------------
+*/
 .hidden {
     opacity: 0;
     filter: blur(10px);
     transform: translateX(-99%);
     transition: 1s linear;
 }
-
 .show {
     opacity: 1;
     filter: blur(0);
     transform: translateX(0);
 }
 
+/*
+Przycisk Scroll-Up
+---------------------------------------------------------------------------
+Opis: Stylizacja przycisku do przewijania strony w górę.
+
+1. Animacja przy najechaniu myszką.
+2. Pozycja stała na ekranie.
+---------------------------------------------------------------------------
+*/
 #scrollUpBtn {
     transition: 1s ease-in;
     position: fixed;
@@ -112,16 +196,25 @@ section {
     z-index: 99;
     cursor: pointer;
 }
-
 #scrollUpImg {
     width: 90%;
     height: auto;
 }
-
 #scrollUpBtn:hover {
     transition: 1s ease-in;
-    transform:translateY(-20%);
+    transform: translateY(-20%);
 }
+
+/*
+Stylizacja dla Karuzeli (Carousel)
+---------------------------------------------------------------------------
+Opis: Stylizacja dla elementów karuzeli.
+
+1. Ustawienia dla kontenera karuzeli.
+2. Ustawienia dla elementów figure i przycisków.
+3. Animacje dla przycisków przy najechaniu myszką.
+---------------------------------------------------------------------------
+*/
 #carouselDiv {
     min-height: 50%;
     min-width: fit-content;
@@ -131,7 +224,6 @@ section {
     transition: 1s linear;
     justify-content: center;
 }
-
 #carouselDiv figure {
     transition: 1s ease-out;
 }
@@ -141,30 +233,49 @@ section {
     border: none;
     border-radius: 5px;
 }
-
-#carouselDiv button:hover{
+#carouselDiv button:hover {
     transition: 0.5s linear;
     background-color: #4c4c4c;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-#carouselImg{
+/*
+Stylizacja dla Obrazów w Karuzeli
+---------------------------------------------------------------------------
+Opis: Stylizacja dla obrazów wewnątrz karuzeli.
+
+1. Ustawienie marginesu, paddingu, szerokości i zaokrąglenia krawędzi.
+2. Animacja przy najechaniu myszką.
+---------------------------------------------------------------------------
+*/
+#carouselImg {
     margin: 0;
     padding: 0;
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
 #carouselImg img {
     transition: 1s ease-in;
     border: none;
     border-radius: 15px;
     height: 40vh;
     background-color: transparent;
-    margin: 5px
+    margin: 5px;
 }
+
+/*
+Formularz
+---------------------------------------------------------------------------
+Opis: Stylizacja dla formularza.
+
+1. Ustawienia dla czcionki, interlinii, układu, itp.
+2. Stylizacja etykiet formularza.
+3. Stylizacja elementów wejściowych formularza.
+4. Stylizacja przycisku formularza.
+---------------------------------------------------------------------------
+*/
 form {
     font-family: 'Cairo', sans-serif;
     letter-spacing: 2px;
@@ -175,10 +286,10 @@ form {
     justify-content: center;
     text-align: center;
 }
-.formlabels{
+.formlabels {
     color: #dfd8d8;
     margin: 20px;
-    display:grid;
+    display: grid;
     text-align: center;
 }
 #nameInput, #inputNumber, #emailInput {
@@ -198,7 +309,7 @@ form {
     background-color: #656565;
     width: 100%;
     height: 70px;
-    text-wrap:balance;
+    text-wrap: balance;
     padding: 5px;
 }
 #radio {
@@ -213,7 +324,16 @@ form {
     margin: 0;
 }
 
-.buttonForm{
+/*
+Stylizacja dla Przycisku Formularza
+---------------------------------------------------------------------------
+Opis: Stylizacja przycisku w formularzu.
+
+1. Animacja przy najechaniu myszką.
+2. Ustawienia koloru, border-radius, paddingu, szerokości itp.
+---------------------------------------------------------------------------
+*/
+.buttonForm {
     transition: 0.5s linear;
     font-weight: 300;
     font-family: 'Cairo', sans-serif;
@@ -231,11 +351,34 @@ form {
     transition: 0.5s linear;
     background-color: #757575;
 }
+
+/*
+Stylizacja dla Kontenera Przycisków Formularza
+---------------------------------------------------------------------------
+Opis: Stylizacja kontenera przycisków formularza.
+
+1. Wykorzystanie układu flexbox do wyśrodkowania elementów.
+2. Układ w kolumnie.
+---------------------------------------------------------------------------
+*/
 #buttonsForm {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
+
+/*
+Media Queries
+---------------------------------------------------------------------------
+Opis: Modyfikacje stylów w zależności od szerokości ekranu.
+
+1. Dostosowanie rozmiaru obrazu i przycisków dla ekranów o większej szerokości.
+2. Zmniejszenie rozmiaru czcionki dla mniejszych ekranów.
+3. Dodanie dodatkowych modyfikacji dla szerokości ekranu powyżej 1024px.
+4. Dodanie modyfikacji dla szerokości ekranu poniżej 768px.
+5. Dodanie modyfikacji dla preferencji mniejszego ruchu.
+---------------------------------------------------------------------------
+*/
 
 @media (min-width: 768px) {
     #carouselImg img {
@@ -247,7 +390,7 @@ form {
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     ul li a {
         font-size: 20px;
     }
@@ -259,8 +402,11 @@ form {
     #carouselImg img {
         height: 30vh;
     }
+    #carouselDiv button {
+        width: 5vw;
+    }
 }
-@media (min-width: 1023px) {
+@media (min-width: 1024px) {
     ul li a {
         font-size: 60px;
     }
@@ -287,6 +433,9 @@ form {
         width: 160px;
         margin: 5px;
     }
+    #carouselDiv button {
+        width: 10vw;
+    }
 }
 
 @media (max-width: 767px) {
@@ -303,7 +452,7 @@ form {
     }
 
     #carouselDiv button {
-        width: 8vw;
+        width: 16vw;
     }
     #previous img, #next img {
         width: 6vw;

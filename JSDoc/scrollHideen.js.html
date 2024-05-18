@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scrollHideen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scrollHideen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Kolekcja elementów HTML o klasie 'hidden'.
+ * @type {NodeListOf&lt;Element>}
+ */
+const hiddenSection = document.querySelectorAll('.hidden');
+
+/**
+ * Callback wywoływany przy zmianie widoczności elementów w obszarze widoczności przeglądarki.
+ * @callback IntersectionObserverCallback
+ * @param {IntersectionObserverEntry[]} entries - Tablica obiektów reprezentujących elementy w obszarze widoczności.
+ * @returns {void}
+ */
+
+/**
+ * Obiekt IntersectionObserver sprawdzający, czy elementy są w obszarze widoczności.
+ * @type {IntersectionObserver}
+ */
+const isVisible = new IntersectionObserver((entries) => {
+    /**
+     * Iteruje przez każdy wpis w tablicy entries.
+     * @param {IntersectionObserverEntry} entry - Obiekt reprezentujący pojedynczy wpis w obszarze widoczności.
+     * @returns {void}
+     */
+    entries.forEach((entry) => {
+        console.log(entry);
+
+        /**
+         * Sprawdza, czy element jest widoczny w obszarze przeglądarki.
+         * @type {boolean}
+         */
+        if (entry.isIntersecting) {
+            console.log("show");
+
+            /**
+             * Dodaje klasę 'show' do elementu, gdy jest widoczny.
+             * @type {DOMTokenList}
+             */
+            entry.target.classList.add('show');
+        } else {
+            console.log("hide");
+
+            /**
+             * Usuwa klasę 'show' z elementu, gdy nie jest widoczny.
+             * @type {DOMTokenList}
+             */
+            entry.target.classList.remove('show');
+        }
+    });
+});
+
+/**
+ * Iteruje przez każdy element kolekcji 'hiddenSection' i obserwuje ich widoczność.
+ * @param {Element} element - Element HTML o klasie 'hidden'.
+ * @returns {void}
+ */
+hiddenSection.forEach((element) => isVisible.observe(element));</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Validate">Validate</a></li><li><a href="global.html#addBet">addBet</a></li><li><a href="global.html#addButton">addButton</a></li><li><a href="global.html#bet">bet</a></li><li><a href="global.html#betCoins">betCoins</a></li><li><a href="global.html#cardAnimation">cardAnimation</a></li><li><a href="global.html#checkCoins">checkCoins</a></li><li><a href="global.html#checkWin">checkWin</a></li><li><a href="global.html#clearingAfterGameEnds">clearingAfterGameEnds</a></li><li><a href="global.html#dealCard">dealCard</a></li><li><a href="global.html#dealerAfterDraw">dealerAfterDraw</a></li><li><a href="global.html#dealerCoins">dealerCoins</a></li><li><a href="global.html#dealerHand">dealerHand</a></li><li><a href="global.html#dealerPoints">dealerPoints</a></li><li><a href="global.html#dealerPointsValue">dealerPointsValue</a></li><li><a href="global.html#drawButton">drawButton</a></li><li><a href="global.html#flipCard">flipCard</a></li><li><a href="global.html#flipped">flipped</a></li><li><a href="global.html#getRandomCard">getRandomCard</a></li><li><a href="global.html#hiddenDealerCard">hiddenDealerCard</a></li><li><a href="global.html#hiddenSection">hiddenSection</a></li><li><a href="global.html#hit">hit</a></li><li><a href="global.html#hitButton">hitButton</a></li><li><a href="global.html#initializeGame">initializeGame</a></li><li><a href="global.html#isVisible">isVisible</a></li><li><a href="global.html#minusBet">minusBet</a></li><li><a href="global.html#minusButton">minusButton</a></li><li><a href="global.html#outOfCoins">outOfCoins</a></li><li><a href="global.html#playerCoins">playerCoins</a></li><li><a href="global.html#playerHand">playerHand</a></li><li><a href="global.html#playerPoints">playerPoints</a></li><li><a href="global.html#playerPointsValue">playerPointsValue</a></li><li><a href="global.html#pointsCounter">pointsCounter</a></li><li><a href="global.html#ranks">ranks</a></li><li><a href="global.html#ranksFile">ranksFile</a></li><li><a href="global.html#ranksValues">ranksValues</a></li><li><a href="global.html#removeAllChildNodes">removeAllChildNodes</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#stackCards">stackCards</a></li><li><a href="global.html#stand">stand</a></li><li><a href="global.html#startButton">startButton</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#suits">suits</a></li><li><a href="global.html#suitsFile">suitsFile</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 27 2024 14:24:44 GMT+0100 (czas środkowoeuropejski standardowy)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

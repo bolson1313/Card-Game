@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Tablica reprezentująca rodzaje kart.
+ * @type {string[]}
+ */
+const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+
+/**
+ * Tablica reprezentująca wartości rang kart.
+ * @type {string[]}
+ */
+const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+/**
+ * Tablica reprezentująca wartości rang kart.
+ * @type {number[]}
+ */
+const ranksValues = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
+
+/**
+ * Tablica reprezentująca źródła obrazów kart.
+ * @type {string[]}
+ */
+const suitsFile = ['kier', 'karo', 'trefl', 'pik'];
+
+/**
+ * Tablica reprezentująca źródła obrazów kart.
+ * @type {string[]}
+ */
+const ranksFile = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'd', 'k', 'as'];
+
+/**
+ * Pole reprezentujące ilość punktów gracza.
+ * @type {HTMLSpanElement}
+ */
+let playerCoins = document.getElementById('playerPoints');
+
+/**
+ * Pole reprezentujące ilość punktów dealera.
+ * @type {HTMLSpanElement}
+ */
+let dealerCoins = document.getElementById('dealerPoints');
+
+/**
+ * Pole reprezentujące ilość postawionych monet.
+ * @type {HTMLSpanElement}
+ */
+let betCoins = document.getElementById('spanBet');
+
+/**
+ * Przycisk dodawania zakładu.
+ * @type {HTMLButtonElement}
+ */
+const addButton = document.getElementById('addBet');
+
+/**
+ * Przycisk odejmowania zakładu.
+ * @type {HTMLButtonElement}
+ */
+const minusButton = document.getElementById('minusBet');
+
+/**
+ * Przycisk dobierania karty.
+ * @type {HTMLButtonElement}
+ */
+const hitButton = document.getElementById('hit');
+
+/**
+ * Przycisk zakończenia tury.
+ * @type {HTMLButtonElement}
+ */
+const drawButton = document.getElementById('draw');
+
+/**
+ * Przycisk rozpoczęcia gry.
+ * @type {HTMLButtonElement}
+ */
+const startButton = document.getElementById('start');
+
+/**
+ * Kontener reprezentujący rękę gracza.
+ * @type {HTMLElement}
+ */
+const playerHand = document.getElementById('playerHand');
+
+/**
+ * Kontener reprezentujący rękę dealera.
+ * @type {HTMLElement}
+ */
+const dealerHand = document.getElementById('dealerHand');
+
+/**
+ * Obiekt reprezentujący zakrytą kartę dealera.
+ * @type {{src: string, cardID: {suitIndex: number, rankIndex: number}}}
+ */
+let hiddenDealerCard = { src: "images/cards/back.jpg", cardID: null };
+
+/**
+ * Flaga informująca, czy karta dealera została odkryta.
+ * @type {boolean}
+ */
+let flipped = true;
+
+/**
+ * Pole reprezentujące ilość punktów dealera.
+ * @type {HTMLSpanElement}
+ */
+const dealerPoints = document.getElementById('dealerSum');
+
+/**
+ * Pole reprezentujące ilość punktów gracza.
+ * @type {HTMLSpanElement}
+ */
+const playerPoints = document.getElementById('playerSum');
+
+/**
+ * Zmienna reprezentująca wartość punktową dealera.
+ * @type {number}
+ */
+let dealerPointsValue = 0;
+
+/**
+ * Zmienna reprezentująca wartość punktową gracza.
+ * @type {number}
+ */
+let playerPointsValue = 0;
+
+/**
+ * Funkcja zwracająca losową kartę.
+ * @returns {{suitIndex: number, rankIndex: number}} Obiekt reprezentujący losową kartę.
+ */
+function getRandomCard() {
+  let suitIndex = Math.floor(Math.random() * suits.length)
+  let rankIndex = Math.floor(Math.random() * ranks.length)
+  return {suitIndex, rankIndex};
+}
+/**
+ * Funkcja obsługująca postawienie zakładu.
+ * @returns {void}
+ */
+function bet(){
+  if(playerCoins.innerText == ''){
+    playerCoins.value = parseInt(localStorage.getItem('playerCoins')) || 500;
+    playerCoins.innerText = playerCoins.value;
+    dealerCoins.value = parseInt(localStorage.getItem('dealerCoins')) || 500;
+    dealerCoins.innerText = dealerCoins.value;
+    console.log("restart game");
+  }
+}
+/**
+ * Funkcja inicjalizująca grę.
+ * @returns {void}
+ */
+function initializeGame() {
+    bet();
+    hitButton.disabled = true;
+    drawButton.disabled = true;
+    betCoins.innerText = betCoins.value;
+    console.log("initialize game");
+}
+/**
+ * Funkcja obsługująca dobieranie karty przez gracza.
+ * @returns {void}
+ */
+function hit() {
+  pointsCounter(dealCard(playerHand), false);
+  setTimeout(() => {
+    checkWin();
+  }, 100);
+}
+/**
+ * Funkcja obsługująca zakończenie tury gracza.
+ * @returns {void}
+ */
+function stand(){
+  console.log("stand");
+
+  flipCard();
+
+  dealerPoints.innerText = dealerPointsValue;
+  drawButton.disabled = true;
+  hitButton.disabled = true;
+
+    setTimeout(() => {
+      dealerAfterDraw();
+    }, 2100);
+}
+/**
+ * Funkcja rozpoczynająca grę.
+ * @returns {void}
+ */
+function startGame() {
+  if(betCoins.value != 0){
+    console.log("game started");
+    hitButton.disabled = false;
+    drawButton.disabled = false;
+    addButton.disabled = true;
+    minusButton.disabled = true;
+    startButton.disabled = true;
+
+    pointsCounter(dealCard(dealerHand), true);
+    dealerPointsValue = 0;
+    pointsCounter(dealCard(dealerHand), true);
+    pointsCounter(dealCard(playerHand), false);
+    pointsCounter(dealCard(playerHand), false);
+  } else {
+    setTimeout("alert('You must bet some coins before starting')");
+  }
+}
+/**
+ * Funkcja obsługująca dodanie zakładu przez gracza.
+ * @returns {void}
+ */
+function addBet(){
+  if(checkCoins()){
+    playerCoins.value -= 50;
+    playerCoins.innerText = playerCoins.value;
+    betCoins.value = parseInt(betCoins.value) + 50;
+    betCoins.innerText = betCoins.value;
+  }
+  checkCoins();
+}
+/**
+ * Funkcja obsługująca odjęcie zakładu przez gracza.
+ * @returns {void}
+ */
+function minusBet(){
+  if(betCoins.value != 0){
+    playerCoins.value += 50;
+    playerCoins.innerText = playerCoins.value;
+    betCoins.value = parseInt(betCoins.value) - 50;
+    betCoins.innerText = betCoins.value;
+    checkCoins();
+  }
+}
+/**
+ * Funkcja sprawdzająca, czy gracz posiada wystarczającą ilość monet.
+ * @returns {boolean} Informacja, czy gracz posiada wystarczającą ilość monet.
+ */
+function checkCoins(){
+  if(playerCoins.value == 0){
+    addButton.disabled = true;
+    return false;
+  } else {
+    addButton.disabled = false;
+    return true;
+  }
+}
+
+/**
+ * Funkcja obsługująca rozdanie karty.
+ * @param {HTMLElement} hand - Kontener reprezentujący rękę, do której ma zostać dodana karta.
+ * @returns {{suitIndex: number, rankIndex: number}} Obiekt reprezentujący wylosowaną kartę.
+ */
+function dealCard(hand) {
+  let randomCard = getRandomCard();
+  let CardFile = { src: null };
+  let cardImage = document.createElement('img');
+
+  if (hiddenDealerCard.cardID == null) {
+    hiddenDealerCard.cardID = randomCard;
+    console.log("hiddenCard: " + suits[randomCard.suitIndex] + "-" + ranks[randomCard.rankIndex]);
+    let HiddenCardFile = hiddenDealerCard.src;
+    cardImage.src = HiddenCardFile;
+    cardImage.alt = suits[randomCard.suitIndex] + " " + ranks[randomCard.rankIndex];
+  } else {
+    console.log("random card: " + suits[randomCard.suitIndex] + "-" + ranks[randomCard.rankIndex]);
+    CardFile.src = "images/cards/" + suitsFile[randomCard.suitIndex] + "-" + ranksFile[randomCard.rankIndex] + ".jpg";
+    console.log(CardFile.src);
+
+    cardImage.src = CardFile.src;
+    cardImage.alt = suits[randomCard.suitIndex] + " " + ranks[randomCard.rankIndex];
+    console.log(randomCard);
+  }
+  
+  cardAnimation(cardImage, hand);
+  return randomCard;
+}
+/**
+ * Funkcja licząca punkty dla gracza i dealera.
+ * @param {{suitIndex: number, rankIndex: number}} card - Obiekt reprezentujący kartę.
+ * @param {boolean} playerType - Określa, czy punkty są liczone dla gracza (true) czy dealera (false).
+ * @returns {void}
+ */
+function pointsCounter(card, playerType){
+  if(playerType){
+    //dealer
+      //checking if ace could fit into the dealer hand
+      if(card.rankIndex == 12 &amp;&amp; dealerPointsValue+11 > 21){
+        dealerPointsValue += 1;
+        dealerPoints.innerText = dealerPointsValue;
+      } else {
+        dealerPointsValue += ranksValues[card.rankIndex];
+        dealerPoints.innerText = dealerPointsValue;
+      }
+  } else {
+    //player
+      //checking if ace could fit into the player hand
+      if(card.rankIndex == 12 &amp;&amp; dealerPointsValue+11 > 21){
+        playerPointsValue += 1;
+        playerPoints.innerText = playerPointsValue;
+      } else {
+        playerPointsValue += ranksValues[card.rankIndex];
+        playerPoints.innerText = playerPointsValue;
+      }
+  }
+}
+/**
+ * Funkcja sprawdzająca wynik gry.
+ * @returns {boolean} Informacja, czy gra została zakończona.
+ */
+function checkWin(){
+  if(playerPointsValue == 21 &amp;&amp; playerPointsValue == dealerPointsValue){
+    flipCard();
+    clearingAfterGameEnds();
+    setTimeout(() => {
+      alert('Draw!');
+      playerCoins.value += betCoins.value;
+      playerCoins.innerText = playerCoins.value;
+    }, 3000);
+    return false;
+  } else if(playerPointsValue > 21){
+    flipCard();
+    clearingAfterGameEnds();
+    setTimeout(() => {
+      alert("You lost " + betCoins.value + " points!");
+      dealerCoins.value += betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
+    }, 3000);
+    
+    return false;
+  } else if(playerPointsValue == 21) {
+    flipCard();
+    clearingAfterGameEnds();
+    setTimeout(() => {
+      alert("You win " + betCoins.value*2 + " points!");
+      playerCoins.value += betCoins.value * 2;
+      playerCoins.innerText = playerCoins.value;
+      dealerCoins.value -= betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
+    }, 3000);
+
+    return false;
+  } else if(dealerPointsValue == 21) {
+    flipCard();
+    clearingAfterGameEnds();
+    setTimeout(() => {
+      alert("You lost " + betCoins.value + " points!");
+      dealerCoins.value += betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
+    }, 3000);
+    
+    return false;
+  } else if(dealerPointsValue > 21) {
+    flipCard();
+    clearingAfterGameEnds();
+    setTimeout(() => {
+      alert("You win " + betCoins.value*2 + " points!");
+      playerCoins.value += betCoins.value * 2;
+      playerCoins.innerText = playerCoins.value;
+      dealerCoins.value -= betCoins.value;
+      dealerCoins.innerText = dealerCoins.value;
+    }, 3000);
+
+    return false;
+  }
+  return true;
+}
+/**
+ * Funkcja usuwająca wszystkie elementy podrzędne z danego rodzica.
+ * @param {HTMLElement} parent - Rodzic, którego dzieci mają zostać usunięte.
+ * @returns {void}
+ */
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+/**
+ * Funkcja wywoływana po zakończeniu gry, czyści wartości i przygotowuje do nowej rozgrywki.
+ * @returns {void}
+ */
+function clearingAfterGameEnds(){
+
+    setTimeout(() => {
+      dealerPointsValue = 0;
+      playerPointsValue = 0;
+      playerPoints.innerText = '';
+      dealerPoints.innerText = '';
+
+      console.log(playerCoins.value + " | " + dealerCoins.value);
+      localStorage.setItem('playerCoins', parseInt(playerCoins.value));
+      localStorage.setItem('dealerCoins', parseInt(dealerCoins.value));
+      console.log("saved: dealer: "+localStorage.getItem('dealerCoins')+ " player: "+localStorage.getItem('playerCoins'));
+    }, 3020);
+    
+    hiddenDealerCard.cardID = null;
+    hitButton.disabled = true;
+    drawButton.disabled = true;
+    hitButton.disabled = true;
+    drawButton.disabled = true;
+
+    setTimeout(() => {
+      removeAllChildNodes(playerHand);
+      removeAllChildNodes(dealerHand);
+      addButton.disabled = false;
+      minusButton.disabled = false;
+      startButton.disabled = false;
+      betCoins.value = 0;
+      betCoins.innerText = betCoins.value;
+      flipped = true;
+    }, 3500);
+    outOfCoins();
+}
+/**
+ * Funkcja sprawdzająca, czy gracz stracił wszystkie monety.
+ * @returns {void}
+ */
+function outOfCoins(){
+  if(playerCoins.value &lt;= 0){
+    setTimeout(() => {
+      alert("Game Over! You lost!");
+      localStorage.clear();
+      console.log("restart! dealer: "+localStorage.getItem('dealerCoins')+" player: "+localStorage.getItem('playerCoins'));
+      window.location.reload();
+    }, 3200);
+  } else if(dealerCoins.value &lt;= 0){
+    setTimeout(() => {
+      alert("Game Over! You You Won!");
+      localStorage.clear();
+      console.log("restart: "+localStorage.getItem('dealerCoins')+" player: "+localStorage.getItem('playerCoins'));
+      window.location.reload();
+    }, 3200);
+  }
+}
+/**
+ * Funkcja obsługująca ruch dealera po zakończeniu tury gracza.
+ * @returns {Promise&lt;void>} Obiekt Promise reprezentujący asynchroniczną operację.
+ */
+async function dealerAfterDraw(){
+  while(checkWin()){ 
+    await sleep(1000);
+    if(dealerPointsValue > playerPointsValue &amp;&amp; dealerPointsValue &lt;= 21){
+        clearingAfterGameEnds();
+        setTimeout(() => {
+          alert("You lost " + betCoins.value + " points!");
+          dealerCoins.value += betCoins.value;
+          dealerCoins.innerText = dealerCoins.value;
+        }, 3000);
+        break;
+    }
+    pointsCounter(dealCard(dealerHand), true);
+    await sleep(300);
+  }
+}
+/**
+ * Funkcja odwracająca kartę dealera (odkrywająca zakrytą kartę).
+ * @returns {void}
+ */
+function flipCard(){
+  
+  if(flipped){
+  let backCard = document.createElement('img');
+  let actualCard = dealerHand.getElementsByTagName('img')[0];
+  let BackCardSrc = "images/cards/" + suitsFile[hiddenDealerCard.cardID.suitIndex] + "-" + ranksFile[hiddenDealerCard.cardID.rankIndex] + ".jpg";
+  
+  dealerPointsValue += ranksValues[hiddenDealerCard.cardID.rankIndex];
+  dealerPoints.innerText = dealerPointsValue;
+
+  actualCard.style.transition = "transform 1s ease";
+  actualCard.style.transform = "rotateY(90deg) translateX(-20%)";
+  setTimeout(() => {
+    backCard.src = BackCardSrc;
+    dealerHand.replaceChild(backCard, actualCard);
+    
+    backCard.style.transition = "transform 1.1s ease";
+    backCard.style.transform = "rotateY(90deg)  translateX(-20%)";
+    setTimeout(() => {
+      backCard.style.transform = "rotateY(0deg)  translateX(-20%)";
+    }, 20);
+  }, 2000);
+  console.log("card flipped");
+  flipped = false;
+  }
+}
+/**
+ * Funkcja opóźniająca wykonanie kodu przez określony czas.
+ * @param {number} ms - Czas opóźnienia w milisekundach.
+ * @returns {Promise&lt;void>} Obiekt Promise reprezentujący asynchroniczną operację.
+ */
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+/**
+ * Funkcja układająca karty w ręce gracza.
+ * @param {HTMLElement} hand - Kontener reprezentujący rękę gracza.
+ * @returns {void}
+ */
+function stackCards(hand) {
+  let cards = hand.getElementsByTagName('img');
+  cards[0].style.transition = "transform 0.4s ease";
+  cards[0].style.transform = "translateX(-20%)";
+  for (let i = 1; i &lt; cards.length; i++) {
+      cards[i].style.transition = "transform 0.4s ease";
+      cards[i].style.transform = 'translateX('+(i-1)*20+'%)';
+  }
+}
+/**
+ * Funkcja obsługująca animację dodania karty do ręki.
+ * @param {HTMLImageElement} cardImage - Obraz reprezentujący kartę.
+ * @param {HTMLElement} hand - Kontener reprezentujący rękę, do której ma zostać dodana karta.
+ * @returns {void}
+ */
+function cardAnimation(cardImage, hand) {
+  hand.appendChild(cardImage);
+  let startPos = window.innerWidth;
+  cardImage.style.transform = 'translateX('+startPos+'px)';
+  cardImage.style.transition = 'transform 1s ease'; 
+
+
+  let cards = hand.getElementsByTagName('img');
+
+  setTimeout(() => {
+    cardImage.style.transform = 'translateX(0)';
+  }, 100);
+
+  setTimeout(() => {
+    stackCards(hand);
+  }, 1100);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Validate">Validate</a></li><li><a href="global.html#addBet">addBet</a></li><li><a href="global.html#addButton">addButton</a></li><li><a href="global.html#bet">bet</a></li><li><a href="global.html#betCoins">betCoins</a></li><li><a href="global.html#cardAnimation">cardAnimation</a></li><li><a href="global.html#checkCoins">checkCoins</a></li><li><a href="global.html#checkWin">checkWin</a></li><li><a href="global.html#clearingAfterGameEnds">clearingAfterGameEnds</a></li><li><a href="global.html#dealCard">dealCard</a></li><li><a href="global.html#dealerAfterDraw">dealerAfterDraw</a></li><li><a href="global.html#dealerCoins">dealerCoins</a></li><li><a href="global.html#dealerHand">dealerHand</a></li><li><a href="global.html#dealerPoints">dealerPoints</a></li><li><a href="global.html#dealerPointsValue">dealerPointsValue</a></li><li><a href="global.html#drawButton">drawButton</a></li><li><a href="global.html#flipCard">flipCard</a></li><li><a href="global.html#flipped">flipped</a></li><li><a href="global.html#getRandomCard">getRandomCard</a></li><li><a href="global.html#hiddenDealerCard">hiddenDealerCard</a></li><li><a href="global.html#hiddenSection">hiddenSection</a></li><li><a href="global.html#hit">hit</a></li><li><a href="global.html#hitButton">hitButton</a></li><li><a href="global.html#initializeGame">initializeGame</a></li><li><a href="global.html#isVisible">isVisible</a></li><li><a href="global.html#minusBet">minusBet</a></li><li><a href="global.html#minusButton">minusButton</a></li><li><a href="global.html#outOfCoins">outOfCoins</a></li><li><a href="global.html#playerCoins">playerCoins</a></li><li><a href="global.html#playerHand">playerHand</a></li><li><a href="global.html#playerPoints">playerPoints</a></li><li><a href="global.html#playerPointsValue">playerPointsValue</a></li><li><a href="global.html#pointsCounter">pointsCounter</a></li><li><a href="global.html#ranks">ranks</a></li><li><a href="global.html#ranksFile">ranksFile</a></li><li><a href="global.html#ranksValues">ranksValues</a></li><li><a href="global.html#removeAllChildNodes">removeAllChildNodes</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#stackCards">stackCards</a></li><li><a href="global.html#stand">stand</a></li><li><a href="global.html#startButton">startButton</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#suits">suits</a></li><li><a href="global.html#suitsFile">suitsFile</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 27 2024 14:24:44 GMT+0100 (czas środkowoeuropejski standardowy)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
